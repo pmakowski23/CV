@@ -136,9 +136,9 @@ const languages =
               <article class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm flex flex-col gap-1.5">
                 <div class="text-sm text-neutral-600">{w.period}</div>
                 <div class="text-lg font-semibold text-neutral-700">
-                  {w.role}
+                  {w.role || w.company}
                 </div>
-                <h3 class="text-md">{w.company}</h3>
+                <h3 class="text-md">{w.role && w.company}</h3>
                 {w.tech && (
                   <div class="text-xs text-neutral-600">
                     {w.tech.split("<br>").map((t) => (
