@@ -6,7 +6,6 @@ interface Props {
   linkedin?: string;
   location?: string;
   sections: Array<{ title: string; items: string[] }>;
-  class?: string;
 }
 
 const {
@@ -16,12 +15,11 @@ const {
   linkedin = "https://www.linkedin.com/in/patryk-makowski23/",
   location = "Warszawa / Łódź, Poland",
   sections,
-  class: className = "",
 } = Astro.props;
 ---
 
 <aside
-  class={`flex flex-col gap-6 p-6 border-r hairline border-neutral-300 print:border-neutral-300 ${className}`}
+  class="flex flex-col gap-6 p-6 border-r border-neutral-300 print:border-neutral-300"
 >
   <div class="w-full">
     <img

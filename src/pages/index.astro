@@ -16,9 +16,11 @@ import { sidebarSections, work } from "../config/config";
   </main>
 
   <div class="mx-auto w-[210mm] bg-white shadow-xl print:shadow-none">
-    <div class="grid grid-cols-[280px_1fr]">
+    <!-- Fix for sidebar full height of last page for print -->
+    <div class="hidden print:block print-bg-sidebar" aria-hidden="true"></div>
+    <div class="grid grid-cols-[280px_1fr] relative z-10">
       <Sidebar sections={sidebarSections} avatarUrl="/avatar.jpg" />
-      <div class="flex flex-col">
+      <div class="flex flex-col repeat-offset">
         <header class="px-8 pt-8 pb-4 border-b border-neutral-300 avoid-break">
           <h1 class="font-heading text-4xl tracking-wider font-extrabold">
             PATRYK MAKOWSKI

@@ -5,6 +5,7 @@
 /* Page sizing for PDF export */
 @page {
   size: A4;
+  /* No global top margin; bottom margin stays */
   margin: 0;
 }
 
@@ -25,6 +26,28 @@ body {
   html,
   body {
     width: 210mm;
+  }
+  /* Fix for sidebar border to be full height for print */
+  .print-bg-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: white;
+    border-right: 1px solid rgb(212 212 212/1);
+    z-index: -1;
+  }
+  /* Repeat vertical offset (top and bottom) on right column across printed pages */
+  .repeat-offset {
+    --repeat-offset: 8mm;
+    padding-top: var(--repeat-offset);
+    padding-bottom: var(--repeat-offset);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    /* neutralize the extra padding at the start and end */
+    margin-top: calc(var(--repeat-offset) * -1);
+    margin-bottom: calc(var(--repeat-offset) * -1);
   }
 }
 
