@@ -8,7 +8,15 @@ import { profile, sidebarSections, work } from "../config/config";
 ---
 
 <BaseLayout>
-  <main class="flex justify-center items-center h-20 screen-only text-center">
+  <main
+    class="flex justify-center gap-2 items-center h-20 screen-only text-center"
+  >
+    <button
+      class="px-4 py-2 border border-neutral-300 hover:border-accent transition rounded"
+      onclick="window.location.href = '/'"
+    >
+      Go back
+    </button>
     <button
       onclick="window.print()"
       class="px-4 py-2 bg-accent text-white rounded">Print / Save as PDF</button
