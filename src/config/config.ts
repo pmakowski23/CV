@@ -30,7 +30,18 @@ export const sidebarSections = [
   },
   {
     title: "Soft skills",
-    items: ["Team leadership", "Project planning", "Technical proficiency"],
+    items: [
+      "Team leadership",
+      "Project planning",
+      "Stakeholder communication",
+      "Conflict resolution",
+      "Strategic thinking",
+      "Decision-making",
+      "Problem solving",
+      "Ownership & accountability",
+      "Agile facilitation (Scrum/Kanban)",
+      "Technical proficiency",
+    ],
   },
   {
     title: "Languages",
@@ -112,7 +123,6 @@ export const work = [
   {
     period: "2019 Now",
     company: "Freelancer",
-    role: "Freelancer",
     tech: "React, CSS, WordPress, Node, Client negotiations, Project management, CI/CD",
     bullets: [
       "Created solutions tailored to unique client requirements, primarily in the e-commerce domain.",

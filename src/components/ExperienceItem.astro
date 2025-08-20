@@ -2,7 +2,7 @@
 interface Props {
   period: string;
   company: string;
-  role: string;
+  role?: string;
   tech?: string;
   bullets: string[];
 }
@@ -32,7 +32,7 @@ const [start, end, duration] = period.split(" ");
         )
       }
     </div>
-    <div class="text-sm text-neutral-700">{role}</div>
+    {role && <div class="text-md font-semibold text-neutral-700">{role}</div>}
     <ul class="list-disc pl-5 space-y-1 text-sm">
       {bullets.map((b) => <li class="avoid-break">{b}</li>)}
     </ul>
