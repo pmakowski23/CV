@@ -1,0 +1,89 @@
+---
+interface Props {
+  avatarUrl?: string;
+  phone?: string;
+  email?: string;
+  linkedin?: string;
+  location?: string;
+  sections: Array<{ title: string; items: string[] }>;
+  class?: string;
+}
+
+const {
+  avatarUrl = "https://placehold.co/280x280",
+  phone = "+48 517 938 827",
+  email = "patryk@pmakowski.dev",
+  linkedin = "https://www.linkedin.com/in/patryk-makowski23/",
+  location = "Warszawa / Łódź, Poland",
+  sections,
+  class: className = "",
+} = Astro.props;
+---
+
+<aside
+  class={`flex flex-col gap-6 p-6 border-r hairline border-neutral-300 print:border-neutral-300 ${className}`}
+>
+  <div class="w-full">
+    <img
+      src={avatarUrl}
+      alt="Profile photo"
+      class="w-full rounded object-cover"
+    />
+  </div>
+
+  <div class="space-y-3 text-sm">
+    <div class="flex items-center gap-3">
+      <img
+        width="20"
+        height="20"
+        src="https://img.icons8.com/sf-regular-filled/48/phone.png"
+        alt="phone"
+      />
+      <span>{phone}</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <img
+        width="20"
+        height="20"
+        src="https://img.icons8.com/sf-regular-filled/48/new-post.png"
+        alt="new-post"
+      />
+      <span>{email}</span>
+    </div>
+    <div class="flex items-center gap-3 break-all">
+      <img
+        width="20"
+        height="20"
+        src="https://img.icons8.com/sf-regular-filled/48/linkedin.png"
+        alt="linkedin"
+      />
+      <a href={linkedin} class="underline" target="_blank" rel="noreferrer"
+        >{linkedin}</a
+      >
+    </div>
+    <div class="flex items-center gap-3">
+      <img
+        width="20"
+        height="20"
+        src="https://img.icons8.com/sf-regular-filled/48/address.png"
+        alt="address"
+      />
+      <span>{location}</span>
+    </div>
+  </div>
+
+  {
+    sections.map((group) => (
+      <section class="pt-4">
+        <h3 class="font-semibold uppercase tracking-wide text-neutral-700 text-sm mb-2">
+          {group.title}
+        </h3>
+        <ul class="list-disc pl-5 space-y-1 text-sm">
+          {group.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</aside>

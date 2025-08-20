@@ -1,0 +1,28 @@
+---
+interface Props {
+  icon?: string;
+  title: string;
+}
+
+const { icon = "", title } = Astro.props;
+---
+
+<section class="space-y-2">
+  <header class="flex items-center gap-2">
+    {
+      icon && (
+        <img
+          width="24"
+          height="24"
+          class="text-accent"
+          src={`https://img.icons8.com/sf-regular-filled/48/${icon}.png`}
+          alt={icon}
+        />
+      )
+    }
+    <h2 class="text-xl font-semibold tracking-wide">{title}</h2>
+  </header>
+  <div>
+    <slot />
+  </div>
+</section>

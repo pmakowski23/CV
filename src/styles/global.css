@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Page sizing for PDF export */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* Screen preview helpers */
+body {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  .screen-only {
+    display: none !important;
+  }
+  .sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+  html,
+  body {
+    width: 210mm;
+  }
+}
+
+/* Utility for fine separators */
+.hairline {
+  border-width: 1px;
+}
+
+/* Prevent items from splitting across pages */
+.avoid-break {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Optional class to force a page break when needed */
+.page-break {
+  break-after: page;
+  page-break-after: always;
+}

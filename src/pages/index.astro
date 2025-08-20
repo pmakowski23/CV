@@ -1,16 +1,69 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Section from "../components/Section.astro";
+import ExperienceItem from "../components/ExperienceItem.astro";
+import EducationItem from "../components/EducationItem.astro";
+import { sidebarSections, work } from "../config/config";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <main class="mx-auto p-4 screen-only text-center">
+    <button
+      onclick="window.print()"
+      class="px-4 py-2 bg-accent text-white rounded">Print / Save as PDF</button
+    >
+  </main>
+
+  <div class="mx-auto w-[210mm] bg-white shadow-xl print:shadow-none">
+    <div class="grid grid-cols-[280px_1fr]">
+      <Sidebar sections={sidebarSections} avatarUrl="/avatar.jpg" />
+      <div class="flex flex-col">
+        <header class="px-8 pt-8 pb-4 border-b border-neutral-300 avoid-break">
+          <h1 class="font-heading text-4xl tracking-wider font-extrabold">
+            PATRYK MAKOWSKI
+          </h1>
+          <div class="text-neutral-700 mt-1">
+            Tech lead / Fullstack Engineer
+          </div>
+          <p
+            class="text-sm text-neutral-700 mt-3 text-justify leading-relaxed max-w-3xl"
+          >
+            Experienced technology leader with a strong background in managing
+            and executing user-centric projects. Skilled in fullstack
+            development, with a passion for creating innovative, user-friendly
+            applications. Proven ability to foster collaborative team
+            environments, implement agile methodologies, and drive productivity.
+            Seeking to contribute to impactful projects that enhance user
+            experiences and provide tangible benefits.
+          </p>
+        </header>
+
+        <div class="p-8 space-y-6">
+          <Section title="Work Experience" icon="briefcase">
+            {work.map((w) => <ExperienceItem {...w} />)}
+          </Section>
+
+          <Section title="Education" icon="literature">
+            <EducationItem
+              school="Lodz University of Technology"
+              degree="Engineering degree in Applied Computer Science"
+              period="Oct 2019 - Mar 2024"
+            />
+          </Section>
+
+          <footer class="text-[10px] text-neutral-500 text-justify avoid-break">
+            I agree to the processing of personal data provided in this document
+            for realising the recruitment process pursuant to the Personal Data
+            Protection Act of 10 May 2018 (Journal of Laws 2018, Item 1000) and
+            in agreement with Regulation (EU) 2016/679 of the European
+            Parliament and of the Council of 27 April 2016 on the protection of
+            natural persons with regard to the processing of personal data and
+            on the free movement of such data, and repealing Directive 95/46/EC
+            (General Data Protection Regulation).
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

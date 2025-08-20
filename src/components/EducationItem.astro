@@ -1,0 +1,15 @@
+---
+interface Props {
+  school: string;
+  degree: string;
+  period: string;
+}
+
+const { school, degree, period } = Astro.props;
+---
+
+<article class="space-y-1 avoid-break">
+  <h3 class="font-semibold text-lg">{school}</h3>
+  <div class="text-sm">{degree}</div>
+  <div class="text-sm text-neutral-600">{period}</div>
+</article>

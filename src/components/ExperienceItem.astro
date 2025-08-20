@@ -1,0 +1,40 @@
+---
+interface Props {
+  period: string;
+  company: string;
+  role: string;
+  tech?: string;
+  bullets: string[];
+}
+
+const { period, company, role, tech, bullets } = Astro.props;
+
+const [start, end, duration] = period.split(" ");
+---
+
+<article class="flex gap-4 py-2">
+  <div class="text-sm text-neutral-600 font-medium mt-0.5">
+    {start}
+    <br />
+    {end}
+    {duration && <span class="text-xs text-neutral-600">({duration})</span>}
+  </div>
+  <div class="space-y-1">
+    <div class="flex justify-between gap-4">
+      <h3 class="font-semibold text-lg whitespace-nowrap">{company}</h3>
+      {
+        tech && (
+          <div class="flex flex-col gap-2 text-xs text-neutral-600">
+            {tech.split("<br>").map((t) => (
+              <span>{t}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+    <div class="text-sm text-neutral-700">{role}</div>
+    <ul class="list-disc pl-5 space-y-1 text-sm">
+      {bullets.map((b) => <li class="avoid-break">{b}</li>)}
+    </ul>
+  </div>
+</article>
