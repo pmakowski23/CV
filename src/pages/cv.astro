@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Section from "../components/Section.astro";
+import ExperienceItem from "../components/ExperienceItem.astro";
+import EducationItem from "../components/EducationItem.astro";
+import { profile, sidebarSections, work } from "../config/config";
+---
+
+<BaseLayout>
+  <main class="flex justify-center items-center h-20 screen-only text-center">
+    <button
+      onclick="window.print()"
+      class="px-4 py-2 bg-accent text-white rounded">Print / Save as PDF</button
+    >
+  </main>
+
+  <div class="mx-auto w-[210mm] bg-white shadow-xl print:shadow-none">
+    <!-- Fix for sidebar full height of last page for print -->
+    <div class="hidden print:block print-bg-sidebar" aria-hidden="true"></div>
+    <div class="grid grid-cols-[280px_1fr] relative z-10">
+      <Sidebar
+        sections={sidebarSections}
+        avatarUrl={profile.avatarUrl}
+        phone={profile.phone}
+        email={profile.email}
+        linkedin={profile.linkedin}
+        location={profile.location}
+      />
+      <div class="flex flex-col repeat-offset">
+        <header class="px-8 pt-8 pb-4 border-b border-neutral-300 avoid-break">
+          <h1 class="font-heading text-4xl tracking-wider font-extrabold">
+            {profile.name.toUpperCase()}
+          </h1>
+          <div class="text-neutral-700 mt-1">
+            {profile.role}
+          </div>
+          <p
+            class="text-sm text-neutral-700 mt-3 text-justify leading-relaxed max-w-3xl"
+          >
+            {profile.summary}
+          </p>
+        </header>
+
+        <div class="p-8 space-y-6">
+          <Section title="Work Experience" icon="briefcase">
+            {work.map((w) => <ExperienceItem {...w} />)}
+          </Section>
+
+          <Section title="Education" icon="literature">
+            <EducationItem
+              school="Lodz University of Technology"
+              degree="Engineering degree in Applied Computer Science"
+              period="Oct 2019 - Mar 2024"
+            />
+          </Section>
+
+          <footer class="text-[10px] text-neutral-500 text-justify avoid-break">
+            I agree to the processing of personal data provided in this document
+            for realising the recruitment process pursuant to the Personal Data
+            Protection Act of 10 May 2018 (Journal of Laws 2018, Item 1000) and
+            in agreement with Regulation (EU) 2016/679 of the European
+            Parliament and of the Council of 27 April 2016 on the protection of
+            natural persons with regard to the processing of personal data and
+            on the free movement of such data, and repealing Directive 95/46/EC
+            (General Data Protection Regulation).
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="h-20"></footer>
+</BaseLayout>

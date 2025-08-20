@@ -1,72 +1,237 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Sidebar from "../components/Sidebar.astro";
 import Section from "../components/Section.astro";
-import ExperienceItem from "../components/ExperienceItem.astro";
-import EducationItem from "../components/EducationItem.astro";
-import { sidebarSections, work } from "../config/config";
+import { profile, sidebarSections, work } from "../config/config";
+
+const techStack =
+  sidebarSections.find((s) => s.title === "Tech stack")?.items ?? [];
+const softSkills =
+  sidebarSections.find((s) => s.title === "Soft skills")?.items ?? [];
+const languages =
+  sidebarSections.find((s) => s.title === "Languages")?.items ?? [];
+const featuredWork = work.slice(0, 3);
 ---
 
-<BaseLayout>
-  <main class="flex justify-center items-center h-20 screen-only text-center">
-    <button
-      onclick="window.print()"
-      class="px-4 py-2 bg-accent text-white rounded">Print / Save as PDF</button
-    >
-  </main>
+<BaseLayout title={`${profile.name} - Portfolio`}>
+  <header
+    class="border-b border-neutral-200 bg-white/80 backdrop-blur sticky top-0 z-50"
+  >
+    <div class="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img
+          src={profile.avatarUrl}
+          alt={profile.name}
+          class="w-9 h-9 rounded-full object-cover ring-2 ring-accent/30"
+        />
+        <span class="font-heading font-semibold tracking-wide">
+          {profile.name}
+        </span>
+      </a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a
+          href="/cv"
+          class="px-3 py-1.5 rounded border border-neutral-300 hover:border-accent transition"
+        >
+          CV
+        </a>
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          class="px-3 py-1.5 rounded hover:text-accent transition">LinkedIn</a
+        >
+        <a
+          href={`mailto:${profile.email}`}
+          class="px-3 py-1.5 rounded bg-accent text-white hover:brightness-95 transition"
+        >
+          Contact
+        </a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="mx-auto w-[210mm] bg-white shadow-xl print:shadow-none">
-    <!-- Fix for sidebar full height of last page for print -->
-    <div class="hidden print:block print-bg-sidebar" aria-hidden="true"></div>
-    <div class="grid grid-cols-[280px_1fr] relative z-10">
-      <Sidebar sections={sidebarSections} avatarUrl="/avatar.jpg" />
-      <div class="flex flex-col repeat-offset">
-        <header class="px-8 pt-8 pb-4 border-b border-neutral-300 avoid-break">
-          <h1 class="font-heading text-4xl tracking-wider font-extrabold">
-            PATRYK MAKOWSKI
-          </h1>
-          <div class="text-neutral-700 mt-1">
-            Tech lead / Fullstack Engineer
-          </div>
-          <p
-            class="text-sm text-neutral-700 mt-3 text-justify leading-relaxed max-w-3xl"
+  <main>
+    <!-- Hero -->
+    <section class="bg-gradient-to-b from-white to-neutral-100">
+      <div
+        class="mx-auto max-w-6xl px-6 py-16 grid md:grid-cols-[220px_1fr] gap-8 items-center"
+      >
+        <div class="flex justify-center md:justify-start">
+          <img
+            src={profile.avatarUrl}
+            alt={profile.name}
+            class="w-44 h-44 rounded-full object-cover ring-4 ring-accent/20 shadow-md"
+          />
+        </div>
+        <div>
+          <h1
+            class="font-heading text-4xl md:text-5xl font-extrabold tracking-wider"
           >
-            Experienced technology leader with a strong background in managing
-            and executing user-centric projects. Skilled in fullstack
-            development, with a passion for creating innovative, user-friendly
-            applications. Proven ability to foster collaborative team
-            environments, implement agile methodologies, and drive productivity.
-            Seeking to contribute to impactful projects that enhance user
-            experiences and provide tangible benefits.
+            {profile.name.toUpperCase()}
+          </h1>
+          <p class="text-neutral-700 mt-2 text-lg">
+            {profile.role}
           </p>
-        </header>
-
-        <div class="p-8 space-y-6">
-          <Section title="Work Experience" icon="briefcase">
-            {work.map((w) => <ExperienceItem {...w} />)}
-          </Section>
-
-          <Section title="Education" icon="literature">
-            <EducationItem
-              school="Lodz University of Technology"
-              degree="Engineering degree in Applied Computer Science"
-              period="Oct 2019 - Mar 2024"
-            />
-          </Section>
-
-          <footer class="text-[10px] text-neutral-500 text-justify avoid-break">
-            I agree to the processing of personal data provided in this document
-            for realising the recruitment process pursuant to the Personal Data
-            Protection Act of 10 May 2018 (Journal of Laws 2018, Item 1000) and
-            in agreement with Regulation (EU) 2016/679 of the European
-            Parliament and of the Council of 27 April 2016 on the protection of
-            natural persons with regard to the processing of personal data and
-            on the free movement of such data, and repealing Directive 95/46/EC
-            (General Data Protection Regulation).
-          </footer>
+          <p class="text-neutral-700 mt-4 max-w-3xl leading-relaxed">
+            {profile.summary}
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/cv"
+              class="px-5 py-2.5 bg-accent text-white rounded shadow hover:brightness-95 transition"
+            >
+              View CV
+            </a>
+            <a
+              href="#experience"
+              class="px-5 py-2.5 border border-neutral-300 rounded hover:border-accent transition"
+            >
+              Experience
+            </a>
+            <a
+              href={`mailto:${profile.email}`}
+              class="px-5 py-2.5 rounded bg-neutral-900 text-white hover:bg-neutral-800 transition"
+            >
+              Get in touch
+            </a>
+          </div>
         </div>
       </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mx-auto max-w-6xl px-6 py-12">
+      <Section title="Skills" icon="learning">
+        <div class="grid md:grid-cols-3 gap-8 mt-2">
+          <div
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm"
+          >
+            <h3 class="font-semibold mb-3">Tech stack</h3>
+            <div class="flex flex-wrap gap-2">
+              {
+                techStack.map((t) => (
+                  <span class="px-2.5 py-1 text-xs rounded-full bg-neutral-100 border border-neutral-200">
+                    {t}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+          <div
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm"
+          >
+            <h3 class="font-semibold mb-3">Soft skills</h3>
+            <ul class="list-disc pl-5 text-sm space-y-1">
+              {softSkills.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+          <div
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm"
+          >
+            <h3 class="font-semibold mb-3">Languages</h3>
+            <ul class="list-disc pl-5 text-sm space-y-1">
+              {languages.map((l) => <li>{l}</li>)}
+            </ul>
+          </div>
+        </div>
+      </Section>
+    </section>
+
+    <!-- Experience highlights -->
+    <section id="experience" class="mx-auto max-w-6xl px-6 py-8">
+      <Section title="Experience highlights" icon="briefcase">
+        <div class="grid md:grid-cols-3 gap-6 mt-2">
+          {
+            featuredWork.map((w) => (
+              <article class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm flex flex-col">
+                <div class="text-sm text-neutral-600">{w.period}</div>
+                <h3 class="font-semibold text-lg mt-1">{w.company}</h3>
+                <div class="text-sm text-neutral-700">{w.role}</div>
+                {w.tech && (
+                  <div class="mt-2 text-xs text-neutral-600">
+                    {w.tech.split("<br>").map((t) => (
+                      <div>{t}</div>
+                    ))}
+                  </div>
+                )}
+                <ul class="list-disc pl-5 text-sm space-y-1 mt-3">
+                  {w.bullets.slice(0, 2).map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+                <div class="mt-4 pt-3 border-t border-neutral-200">
+                  <a href="/cv" class="text-sm text-accent underline">
+                    See full CV →
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </Section>
+    </section>
+
+    <!-- Contact -->
+    <section class="mx-auto max-w-6xl px-6 py-12">
+      <Section title="Contact" icon="new-post">
+        <div class="grid md:grid-cols-3 gap-6 mt-2">
+          <a
+            href={`mailto:${profile.email}`}
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm flex items-center gap-3 hover:border-accent transition"
+          >
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/sf-regular-filled/48/new-post.png"
+              alt="email"
+            />
+            <div>
+              <div class="text-sm text-neutral-600">Email</div>
+              <div class="font-medium">{profile.email}</div>
+            </div>
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm flex items-center gap-3 hover:border-accent transition"
+          >
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/sf-regular-filled/48/linkedin.png"
+              alt="linkedin"
+            />
+            <div>
+              <div class="text-sm text-neutral-600">LinkedIn</div>
+              <div class="font-medium break-all">{profile.linkedin}</div>
+            </div>
+          </a>
+          <div
+            class="p-5 rounded-lg border border-neutral-200 bg-white shadow-sm flex items-center gap-3"
+          >
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/sf-regular-filled/48/address.png"
+              alt="address"
+            />
+            <div>
+              <div class="text-sm text-neutral-600">Location</div>
+              <div class="font-medium">{profile.location}</div>
+            </div>
+          </div>
+        </div>
+      </Section>
+    </section>
+  </main>
+
+  <footer
+    class="py-8 border-t border-neutral-200 text-center text-sm text-neutral-600"
+  >
+    <div class="mx-auto max-w-6xl px-6">
+      © {new Date().getFullYear()}
+      {profile.name}. Built with Astro + Tailwind.
     </div>
-  </div>
-  <footer class="h-20"></footer>
+  </footer>
 </BaseLayout>

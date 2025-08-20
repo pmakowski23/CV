@@ -1,3 +1,15 @@
+export const profile = {
+  name: "Patryk Makowski",
+  role: "Tech lead / Fullstack Engineer",
+  email: "patryk@pmakowski.dev",
+  phone: "+48 517 938 827",
+  linkedin: "https://www.linkedin.com/in/patryk-makowski23/",
+  location: "Warszawa / Łódź, Poland",
+  avatarUrl: "/avatar.jpg",
+  summary:
+    "Experienced technology leader with a strong background in managing and executing user-centric projects. Skilled in fullstack development, with a passion for creating innovative, user-friendly applications. Proven ability to foster collaborative team environments, implement agile methodologies, and drive productivity.",
+} as const;
+
 export const sidebarSections = [
   {
     title: "Tech stack",
