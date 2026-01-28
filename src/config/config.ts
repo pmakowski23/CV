@@ -54,9 +54,11 @@ export const work = [
     period: "2025 Now",
     company: "Massive rocket",
     role: "Senior Fullstack Developer",
-    tech: "React 19, TanStack Query, React Router, React Hook Form, Zod<br>NestJS, TypeORM, PostgreSQL, Redis, Keycloak, Azure Event Hubs + Avro, Docker",
+    tech: "AI, React 19, TanStack Query, React Router, React Hook Form, Zod<br>NestJS, TypeORM, PostgreSQL, Redis, Keycloak, Azure Event Hubs + Avro, Docker",
     bullets: [
       "Designed a modular NestJS backend with fine-grained RBAC via Keycloak; migrated org/project metadata to Keycloak groups, attributes, and realm roles",
+      "Worked with AI DAG to analyze thousands of standards from different organizations",
+      "Scraped multiple organization websites to attain structured data from them",
       "Implemented Redis caching and secure token storage with health checks and resilient, observable infrastructure",
       "Standardized APIs with Swagger/OpenAPI and automated typed client generation for the frontend",
       "Established an event-driven foundation using Azure Event Hubs with Avro/Schema Registry",
