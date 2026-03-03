@@ -123,7 +123,7 @@ export const work = [
     ],
   },
   {
-    period: "2019 Now",
+    period: "2019 2024",
     company: "Freelancer",
     tech: "React, CSS, WordPress, Node, Client negotiations, Project management, CI/CD",
     bullets: [
