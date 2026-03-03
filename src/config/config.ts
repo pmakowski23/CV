@@ -51,7 +51,7 @@ export const sidebarSections = [
 
 export const work = [
   {
-    period: "2025 - 2026",
+    period: "2025 2026",
     company: "Massive rocket",
     role: "Senior Fullstack Developer",
     tech: "AI, React 19, TanStack Query, React Router, React Hook Form, Zod<br>NestJS, TypeORM, PostgreSQL, Redis, Keycloak, Azure Event Hubs + Avro, Docker",
