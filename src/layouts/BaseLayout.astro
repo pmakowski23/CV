@@ -15,11 +15,19 @@ const { title = `${profile.name} - CV` } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/SourceSans3-VariableFont_wght.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/SourceSerif4-VariableFont_wght.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
     />
   </head>
   <body class="bg-neutral-100 text-neutral-900 print:bg-white font-body">

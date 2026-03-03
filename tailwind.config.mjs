@@ -9,8 +9,8 @@ export default {
         },
       },
       fontFamily: {
-        heading: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
-        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        heading: ["Source Serif 4", "ui-serif", "Georgia", "serif"],
+        body: ["Source Sans 3", "ui-sans-serif", "system-ui", "sans-serif"],
       },
     },
   },
