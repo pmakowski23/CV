@@ -1,10 +1,11 @@
 import { createMemo, createSignal } from "solid-js";
 
 const HOURS_PER_DAY = 8;
-const DAYS_PER_WEEK = 5;
-const WEEKS_PER_YEAR = 52;
-const WORK_DAYS_PER_YEAR = DAYS_PER_WEEK * WEEKS_PER_YEAR;
-const WORK_HOURS_PER_YEAR = WORK_DAYS_PER_YEAR * HOURS_PER_DAY;
+const WORK_DAYS_PER_MONTH = 21;
+const MONTHS_PER_YEAR = 12;
+const WORK_HOURS_PER_MONTH = WORK_DAYS_PER_MONTH * HOURS_PER_DAY;
+const WORK_DAYS_PER_YEAR = WORK_DAYS_PER_MONTH * MONTHS_PER_YEAR;
+const WORK_HOURS_PER_YEAR = WORK_HOURS_PER_MONTH * MONTHS_PER_YEAR;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
@@ -20,7 +21,9 @@ const parseDays = (value: string) => {
 };
 
 const formatMoney = (value: number) =>
-  `$${value.toLocaleString(undefined, {
+  `${value.toLocaleString("pl-PL", {
+    style: "currency",
+    currency: "PLN",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
@@ -39,7 +42,7 @@ export default function PayCalculatorForm() {
   );
 
   const combinedYearly = createMemo(() => annualSuggested() + leaveValue());
-  const combinedMonthly = createMemo(() => combinedYearly() / 12);
+  const combinedMonthly = createMemo(() => combinedYearly() / MONTHS_PER_YEAR);
   const combinedHourly = createMemo(
     () => combinedYearly() / WORK_HOURS_PER_YEAR,
   );
@@ -82,9 +85,11 @@ export default function PayCalculatorForm() {
                 inputMode="decimal"
                 min="0"
                 step="0.01"
-                value={(annualSuggested() / 12).toFixed(2)}
+                value={(annualSuggested() / MONTHS_PER_YEAR).toFixed(2)}
                 onInput={(event) =>
-                  setAnnualSuggested(parseMoney(event.currentTarget.value) * 12)
+                  setAnnualSuggested(
+                    parseMoney(event.currentTarget.value) * MONTHS_PER_YEAR,
+                  )
                 }
                 class="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-lg font-semibold text-neutral-900 outline-none focus:border-neutral-500"
               />
@@ -152,8 +157,8 @@ export default function PayCalculatorForm() {
           </div>
 
           <p class="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Assumption: 8 hours/day, 5 days/week, 52 weeks/year (2080 hours and
-            260 work days).
+            Assumption (B2B): 8 hours/day, 21 work days/month, 12 months/year
+            (168 hours/month, 2016 hours/year, 252 work days/year).
           </p>
         </article>
       </section>
