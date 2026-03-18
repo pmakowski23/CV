@@ -11,40 +11,39 @@ const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
 const parseMoney = (value: string) => {
-  const parsed = Number.parseFloat(value.replace(",", "."));
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+  const parsed = Number.parseInt(value.replace(/\D/g, ""), 10);
+  return Number.isFinite(parsed) ? parsed : 0;
 };
 
 const parseDays = (value: string) => {
-  const parsed = Number.parseInt(value, 10);
+  const parsed = Number.parseInt(value.replace(/\D/g, ""), 10);
   return Number.isFinite(parsed) ? clamp(parsed, 0, WORK_DAYS_PER_YEAR) : 0;
 };
 
-const formatMoney = (value: number) =>
-  `${value.toLocaleString("pl-PL", {
-    style: "currency",
-    currency: "PLN",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatNumber = (value: number) =>
+  Math.round(value)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
 export default function PayCalculatorForm() {
-  const [annualSuggested, setAnnualSuggested] = createSignal(104000);
-  const [paidFreeDays, setPaidFreeDays] = createSignal(20);
+  const [annualSuggested, setAnnualSuggested] = createSignal(302400);
+  const [paidFreeDays, setPaidFreeDays] = createSignal(21);
   const [paidSickDays, setPaidSickDays] = createSignal(5);
 
   const totalPaidDays = createMemo(() =>
     clamp(paidFreeDays() + paidSickDays(), 0, WORK_DAYS_PER_YEAR),
   );
 
-  const leaveValue = createMemo(
-    () => (annualSuggested() / WORK_DAYS_PER_YEAR) * totalPaidDays(),
+  const leaveValue = createMemo(() =>
+    Math.round((annualSuggested() / WORK_DAYS_PER_YEAR) * totalPaidDays()),
   );
 
   const combinedYearly = createMemo(() => annualSuggested() + leaveValue());
-  const combinedMonthly = createMemo(() => combinedYearly() / MONTHS_PER_YEAR);
-  const combinedHourly = createMemo(
-    () => combinedYearly() / WORK_HOURS_PER_YEAR,
+  const combinedMonthly = createMemo(() =>
+    Math.round(combinedYearly() / MONTHS_PER_YEAR),
+  );
+  const combinedHourly = createMemo(() =>
+    Math.round(combinedYearly() / WORK_HOURS_PER_YEAR),
   );
 
   return (
@@ -62,11 +61,11 @@ export default function PayCalculatorForm() {
             <label class="grid gap-1">
               <span class="text-sm font-medium text-neutral-700">Per hour</span>
               <input
-                type="number"
-                inputMode="decimal"
-                min="0"
-                step="0.01"
-                value={(annualSuggested() / WORK_HOURS_PER_YEAR).toFixed(2)}
+                type="text"
+                inputMode="numeric"
+                value={formatNumber(
+                  Math.round(annualSuggested() / WORK_HOURS_PER_YEAR),
+                )}
                 onInput={(event) =>
                   setAnnualSuggested(
                     parseMoney(event.currentTarget.value) * WORK_HOURS_PER_YEAR,
@@ -81,11 +80,11 @@ export default function PayCalculatorForm() {
                 Per month
               </span>
               <input
-                type="number"
-                inputMode="decimal"
-                min="0"
-                step="0.01"
-                value={(annualSuggested() / MONTHS_PER_YEAR).toFixed(2)}
+                type="text"
+                inputMode="numeric"
+                value={formatNumber(
+                  Math.round(annualSuggested() / MONTHS_PER_YEAR),
+                )}
                 onInput={(event) =>
                   setAnnualSuggested(
                     parseMoney(event.currentTarget.value) * MONTHS_PER_YEAR,
@@ -98,11 +97,9 @@ export default function PayCalculatorForm() {
             <label class="grid gap-1">
               <span class="text-sm font-medium text-neutral-700">Per year</span>
               <input
-                type="number"
-                inputMode="decimal"
-                min="0"
-                step="0.01"
-                value={annualSuggested().toFixed(2)}
+                type="text"
+                inputMode="numeric"
+                value={formatNumber(annualSuggested())}
                 onInput={(event) =>
                   setAnnualSuggested(parseMoney(event.currentTarget.value))
                 }
@@ -155,11 +152,6 @@ export default function PayCalculatorForm() {
               />
             </label>
           </div>
-
-          <p class="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Assumption (B2B): 8 hours/day, 21 work days/month, 12 months/year
-            (168 hours/month, 2016 hours/year, 252 work days/year).
-          </p>
         </article>
       </section>
 
@@ -171,28 +163,22 @@ export default function PayCalculatorForm() {
 
         <div class="mt-6 grid gap-4 md:grid-cols-3">
           <article class="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p class="text-sm text-neutral-300">Combined per hour</p>
-            <p class="mt-2 text-2xl font-bold">
-              {formatMoney(combinedHourly())}
-            </p>
+            <p class="text-2xl font-bold">{formatNumber(combinedHourly())}</p>
+            <p class="text-sm text-neutral-300">per hour</p>
           </article>
           <article class="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p class="text-sm text-neutral-300">Combined per month</p>
-            <p class="mt-2 text-2xl font-bold">
-              {formatMoney(combinedMonthly())}
-            </p>
+            <p class="text-2xl font-bold">{formatNumber(combinedMonthly())}</p>
+            <p class="text-sm text-neutral-300">per month</p>
           </article>
           <article class="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p class="text-sm text-neutral-300">Combined per year</p>
-            <p class="mt-2 text-2xl font-bold">
-              {formatMoney(combinedYearly())}
-            </p>
+            <p class="text-2xl font-bold">{formatNumber(combinedYearly())}</p>
+            <p class="text-sm text-neutral-300">per year</p>
           </article>
         </div>
 
         <p class="mt-5 text-sm text-neutral-300">
           Paid days total: {totalPaidDays()}. Extra annual value from paid days:{" "}
-          {formatMoney(leaveValue())}.
+          {formatNumber(leaveValue())}.
         </p>
       </section>
     </>

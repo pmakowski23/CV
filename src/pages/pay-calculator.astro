@@ -9,7 +9,9 @@ import PayCalculatorForm from "../components/PayCalculatorForm";
   >
     <div class="mx-auto max-w-5xl">
       <header class="mb-8">
-        <p class="uppercase tracking-[0.2em] text-xs text-neutral-600 font-semibold">
+        <p
+          class="uppercase tracking-[0.2em] text-xs text-neutral-600 font-semibold"
+        >
           Compensation
         </p>
         <h1 class="mt-2 text-4xl font-heading font-extrabold text-neutral-900">
@@ -20,9 +22,24 @@ import PayCalculatorForm from "../components/PayCalculatorForm";
           sync. Add paid free days and sick days to calculate combined
           compensation.
         </p>
+        <p
+          class="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+        >
+          Assumption (B2B): 8 hours/day, 21 work days/month, 12 months/year (168
+          hours/month, 2016 hours/year, 252 work days/year).
+        </p>
       </header>
 
-      <PayCalculatorForm client:load />
+      <div class="flex gap-6">
+        <div>
+          <h2 class="text-xl text-center font-semibold mb-4">Company 1</h2>
+          <PayCalculatorForm client:load />
+        </div>
+        <div>
+          <h2 class="text-xl text-center font-semibold mb-4">Company 2</h2>
+          <PayCalculatorForm client:load />
+        </div>
+      </div>
     </div>
   </main>
 </BaseLayout>
