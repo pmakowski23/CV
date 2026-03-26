@@ -5,6 +5,7 @@ interface Props {
   email?: string;
   linkedin?: string;
   location?: string;
+  hideContact?: boolean;
   sections: Array<{ title: string; items: string[] }>;
 }
 
@@ -14,6 +15,7 @@ const {
   email = "patryk@pmakowski.dev",
   linkedin = "https://www.linkedin.com/in/patryk-makowski23/",
   location = "Warszawa / Łódź, Poland",
+  hideContact = false,
   sections,
 } = Astro.props;
 ---
@@ -21,54 +23,60 @@ const {
 <aside
   class="flex flex-col gap-6 p-6 border-r border-neutral-300 print:border-neutral-300"
 >
-  <div class="w-full">
-    <img
-      src={avatarUrl}
-      alt="Profile photo"
-      class="w-full rounded object-cover"
-    />
-  </div>
+  {
+    !hideContact && (
+      <>
+        <div class="w-full">
+          <img
+            src={avatarUrl}
+            alt="Profile photo"
+            class="w-full rounded object-cover"
+          />
+        </div>
 
-  <div class="space-y-3 text-sm">
-    <div class="flex items-center gap-3">
-      <img
-        width="20"
-        height="20"
-        src="https://img.icons8.com/sf-regular-filled/48/phone.png"
-        alt="phone"
-      />
-      <span>{phone}</span>
-    </div>
-    <div class="flex items-center gap-3">
-      <img
-        width="20"
-        height="20"
-        src="https://img.icons8.com/sf-regular-filled/48/new-post.png"
-        alt="new-post"
-      />
-      <span>{email}</span>
-    </div>
-    <div class="flex items-center gap-3 break-all">
-      <img
-        width="20"
-        height="20"
-        src="https://img.icons8.com/sf-regular-filled/48/linkedin.png"
-        alt="linkedin"
-      />
-      <a href={linkedin} class="underline" target="_blank" rel="noreferrer"
-        >{linkedin}</a
-      >
-    </div>
-    <div class="flex items-center gap-3">
-      <img
-        width="20"
-        height="20"
-        src="https://img.icons8.com/sf-regular-filled/48/address.png"
-        alt="address"
-      />
-      <span>{location}</span>
-    </div>
-  </div>
+        <div class="space-y-3 text-sm">
+          <div class="flex items-center gap-3">
+            <img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/sf-regular-filled/48/phone.png"
+              alt="phone"
+            />
+            <span>{phone}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/sf-regular-filled/48/new-post.png"
+              alt="new-post"
+            />
+            <span>{email}</span>
+          </div>
+          <div class="flex items-center gap-3 break-all">
+            <img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/sf-regular-filled/48/linkedin.png"
+              alt="linkedin"
+            />
+            <a href={linkedin} class="underline" target="_blank" rel="noreferrer"
+              >{linkedin}</a
+            >
+          </div>
+          <div class="flex items-center gap-3">
+            <img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/sf-regular-filled/48/address.png"
+              alt="address"
+            />
+            <span>{location}</span>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   {
     sections.map((group) => (
